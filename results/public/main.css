@@ -1,0 +1,43 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: yellow;
+}
+
+.animal {
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s linear;
+}
+
+#dog {
+    background: linear-gradient(to bottom, #FF4C65, #E94C6F);
+}
+
+#cat {
+    background: linear-gradient(to bottom, #FFA200, #FFC33C);
+}
+
+.animal img {
+    height: auto;
+    width: 100%;
+}
+
+#dog img {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+#cat img {
+    max-height: 120px;
+    max-width: 120px;
+}
