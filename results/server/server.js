@@ -14,9 +14,10 @@ const io = socketIO(server);
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
-const mockdata = {
-    dogs: 50,
-    cats: 50
+// Started value
+let mockdata = {
+    dogs: 50, // 0
+    cats: 50 // 0
 };
 
 io.on('connection', (socket) => {
@@ -28,12 +29,16 @@ app.post('/votes-in', (req, res) => {
     const updatedVotes = req.body; /// body should have only '{dogs: 30, cats: 30}'
     // emit updatedVotes
     res.send('OK');
-    io.sockets.emit('update-votes', {
-        dogs: updatedVotes.dogs,
-        cats: updatedVotes.cats
-    });
-    // mockdata.dogs++;
-    // mockdata.cats--;
+
+    const dogs = 100 * ((updatedVotes.dogs) / (updatedVotes.cats + updatedVotes.dogs));
+    const cats = 100 * ((updatedVotes.cats) / (updatedVotes.cats + updatedVotes.dogs));
+
+    mockdata = {
+        dogs,
+        cats
+    };
+
+    io.sockets.emit('update-votes', mockdata);
 });
 
 server.listen(port, () => {

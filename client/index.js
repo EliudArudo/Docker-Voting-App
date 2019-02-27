@@ -4,7 +4,12 @@ const dog = document.getElementById('dog');
 const cat = document.getElementById('cat');
 
 function vote(vote, id) {
-    fetch('/worker/vote', {
+
+    /// Voter-Client - '/' :3000
+    /// Results  - '/results' :4000
+    /// Worker - :5000 '/api' - should be perfectly okay, for use with other interfaces
+
+    fetch('/api/vote', {
         method: "POST",
         body: JSON.stringify({
             id,
