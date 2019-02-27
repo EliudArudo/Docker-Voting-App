@@ -4,7 +4,7 @@ const dog = document.getElementById('dog');
 const cat = document.getElementById('cat');
 
 function vote(vote, id) {
-    fetch('/api/vote', {
+    fetch('/worker/vote', {
         method: "POST",
         body: JSON.stringify({
             id,

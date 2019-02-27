@@ -25,15 +25,15 @@ io.on('connection', (socket) => {
 });
 
 app.post('/votes-in', (req, res) => {
-    const updatedVotes = req.body.votes;
+    const updatedVotes = req.body; /// body should have only '{dogs: 30, cats: 30}'
     // emit updatedVotes
     res.send('OK');
     io.sockets.emit('update-votes', {
-        dogs: mockdata.dogs + 1,
-        cats: mockdata.cats - 1
+        dogs: updatedVotes.dogs,
+        cats: updatedVotes.cats
     });
-    mockdata.dogs++;
-    mockdata.cats--;
+    // mockdata.dogs++;
+    // mockdata.cats--;
 });
 
 server.listen(port, () => {
