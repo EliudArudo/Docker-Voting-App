@@ -10,6 +10,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .vote-box {
@@ -60,4 +61,27 @@ body {
 .cat {
     height: 120px !important;
     width: auto;
+}
+
+.inputs-div {
+    width: 320px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    margin-top: 7px;
+    border-radius: 3px;
+}
+
+.inputs-div input {
+    height: 35px;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none !important;
+    color: white;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.inputs-div input:focus {
+    outline: none !important;
 }

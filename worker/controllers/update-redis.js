@@ -5,6 +5,8 @@ module.exports = function (redisClient, vote) {
             // Gets JSON stringified array of 'ids'
             let res = await redisClient.get(vote.vote);
 
+            console.log('Res from update Redis', res);
+
             res = JSON.parse(res);
             if (!res) {
                 res = [];
@@ -20,6 +22,7 @@ module.exports = function (redisClient, vote) {
 
             dogs = JSON.parse(dogs),
                 cats = JSON.parse(cats);
+
 
             if (!dogs) {
                 dogs = [];

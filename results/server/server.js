@@ -22,11 +22,19 @@ let mockdata = {
 
 io.on('connection', (socket) => {
     // Get current values and send, then set up listener
+    
     socket.emit('update-votes', mockdata);
+
+    socket.on('disconnect', () => {
+      console.log(`Connection left`);
+    })
 });
 
 app.post('/votes-in', (req, res) => {
-    const updatedVotes = req.body; /// body should have only '{dogs: 30, cats: 30}'
+    const updatedVotes = {
+        dogs: req.body.dogs,
+        cats:req.body.cats
+    }; /// body should have only '{dogs: 30, cats: 30}'
     // emit updatedVotes
     res.send('OK');
 

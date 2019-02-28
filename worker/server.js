@@ -24,14 +24,20 @@ const redisClient = redis.createClient({
 });
 
 redisClient.get = util.promisify(redisClient.get);
-redisClient.getall = util.promisify(redisClient.getall);
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/vote', checkBody, (req, res) => {
 
-    resolver(redisClient, req.body).then(tally => {
+    const vote = {
+        id: req.body.id,
+        vote: req.body.vote
+    }
+
+    console.log('Vote just came in', vote);
+
+    resolver(redisClient, vote).then(tally => {
 
         /// Send this tally to the Results server
 
@@ -39,12 +45,13 @@ app.post('/vote', checkBody, (req, res) => {
 
         axios({
             method: 'post',
-            url: `${env.RESULTSSERVER}/votes-in`,
+            url: `results://${env.RESULTSSERVER}:4000/votes-in`,
             data: tally
         }).then(response => {
             return res.send('OK');
         }).catch(e => {
-            return res.status(500).send(e);
+            console.log(e);
+            return res.status(500).send('Please try again later');
         });
 
 

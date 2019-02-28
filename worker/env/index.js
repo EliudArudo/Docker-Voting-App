@@ -5,5 +5,5 @@ module.exports = {
     REDISHOST: process.env.REDISHOST,
     REDISPORT: process.env.REDISPORT,
     //// Take note of this
-    RESULTSSERVER: process.env.RESULTS_SERVER
+    RESULTSSERVER: process.env.RESULTSSERVER
 }

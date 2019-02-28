@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
     }
 
 
-    if (!(req.body.vote === 'cat' || req.body.vote === 'cat')) {
+    if (!(req.body.vote === 'cat' || req.body.vote === 'dog')) {
         res.status(406).send('Please choose between a cat or a dog');
         return;
     }

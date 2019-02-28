@@ -4,7 +4,10 @@ const updateRedis = require('./update-redis');
 module.exports = function (redisClient, vote) {
 
     return new Promise((resolve, reject) => {
-        Vote.findOne(vote).then(res => {
+        // checking by id spreads to dogs and cats
+        Vote.findOne({
+            id: vote.id
+        }).then(res => {
             if (!res) {
                 // If not found, add it, then update redis
                 return resolve(vote);

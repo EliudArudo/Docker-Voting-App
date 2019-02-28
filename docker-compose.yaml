@@ -1,0 +1,33 @@
+version: '3'
+services:
+  mongodb:
+    image: 'mongo:latest'
+  redis:
+    image: 'redis:latest'
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - '80:80'
+  results:
+    build:
+      context: ./results
+    volumes:
+      - /app/node_modules      
+  api:
+    build:
+      context: ./worker
+    volumes:
+      - /app/node_modules
+    environment:
+      - REDISHOST=redis
+      - REDISPORT=6379
+      - MONGOURI=mongodb
+      - MONGOPORT=27017
+      - MONGODATABASE=test
+      - RESULTSSERVER=results
+  client:
+    build:
+      context: ./client
+      

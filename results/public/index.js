@@ -23,3 +23,7 @@ socket.on('connect', function () {
 socket.on('update-votes', function (votes) {
     changePercentages(votes.dogs, votes.cats);
 });
+
+socket.on('disconnect', function () {
+  console.log('Disconnected from server');
+});

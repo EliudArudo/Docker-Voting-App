@@ -6,7 +6,9 @@ const mongoURI = `mongodb://${env.MONGOURI}:${env.MONGOPORT}/${env.MONGODATABASE
 mongoose.Promise = global.Promise;
 
 mongoose.connect(mongoURI, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    reconnectTries: 10,
+    reconnectInterval: 1000
 }, (err, db) => {
     if (err) {
         console.log(err);

@@ -1,20 +1,22 @@
 // const vote = {id:'sdfddsdfsfd, vote: 'cat'}
 module.exports = function (redisClient, vote) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
-        // Check 'cat' or 'dog' id's collections
-        redisClient.get(vote.vote).then(res => {
+        try { // Check both ways my guy
 
-            const array = JSON.parse(res);
+            let dogs = await redisClient.get('dog'),
+                cats = await redisClient.get('cat');
+            dogs = JSON.parse(dogs),
+                cats = JSON.parse(cats);
 
-            if (array && array.includes(vode.id)) {
-                return Promise.reject('You already voted');
+            if ((dogs && dogs.includes(vote.id)) || (cats && cats.includes(vote.id))) {
+                return reject('You already voted');
             }
 
             return resolve(vote);
 
-        }).catch(e => {
+        } catch (e) {
             return reject(e);
-        })
+        }
     });
 }
