@@ -1,0 +1,107 @@
+version: "3"
+services:
+  nginx:
+    image: eliudarudo/voting-app-nginx
+    ports:
+      - "80:80"
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+  client:
+    image: eliudarudo/voting-app-client
+    ports: 
+      - "3000"
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+  api:
+    image: eliudarudo/voting-app-worker
+    ports: 
+      - "5000"
+    networks:
+      - frontend
+      - backend
+    environment:
+      - MONGOURI=mongodb
+      - MONGOPORT=27017
+      - MONGODATABASE=test
+      - REDISHOST=redis
+      - REDISPORT=6379
+      - RESULTSSERVER=results
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        window: 120s
+    depends_on:
+      - redis
+      - mongodb
+  results:
+    image: eliudarudo/voting-app-results
+    ports: 
+      - "4000"
+    networks:
+      - backend
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        window: 120s
+    depends_on:
+      - worker
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379"
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - db-data:/data/db
+    ports:
+      - "27017"
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+
+
+
+
