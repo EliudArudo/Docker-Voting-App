@@ -94,7 +94,6 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-
 networks:
   frontend:
   backend:
