@@ -12,7 +12,7 @@ mongoose.connect(mongoURI, {
 }, (err, db) => {
     if (err) {
         console.log(err);
-        return console.log('MongoDB connection issues');;
+        process.exit(1);
     }
 
     console.log('Mongodb connected');

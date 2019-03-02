@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   nginx:
     image: eliudarudo/voting-app-nginx
@@ -47,8 +47,8 @@ services:
         delay: 10s
         window: 120s
     depends_on:
-      - redis
       - mongodb
+      - redis
   results:
     image: eliudarudo/voting-app-results
     ports: 
@@ -65,7 +65,7 @@ services:
         delay: 10s
         window: 120s
     depends_on:
-      - worker
+      - api
   redis:
     image: redis:alpine
     ports:
