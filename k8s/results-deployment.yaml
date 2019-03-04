@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: results-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: results
+  template:
+    metadata:
+      labels:
+        component: results
+    spec:
+      containers:
+        - name: results
+          image: eliudarudo/voting-app-results
+          ports:
+            - containerPort: 4000

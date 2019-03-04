@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers:
+        - name: worker
+          image: eliudarudo/voting-app-worker
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGOURI
+              value: mongodb-cluster-ip-service
+            - name: MONGOPORT
+              value: '27017'
+            - name: MONGODATABASE
+              value: 'test'
+            - name: REDISHOST
+              value: redis-cluster-ip-service
+            - name: REDISPORT
+              value: '6379'
+            - name: RESULTSSERVER
+              value: results-cluster-ip-service
