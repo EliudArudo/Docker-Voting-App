@@ -78,19 +78,13 @@ $ docker-machine rm <node-name>
 1. First instantiate the Ingresses from 'Initial Ingress Setup'
 
 
-2. Start with the Generic mandatory setup (in the home directory)
+2. Start with the Generic mandatory setup (in the home directory) and the LoadBalancing service for development purposes
 
 ```
-$ kubectl apply -f 'Initial Ingress Setup/Generic Deployment'
+$ kubectl apply -f 'Initial Ingress Setup'
 ```
 
-3. Then appy setup the LoadBalancing service for development purposes
-
-```
-$ kubectl apply -f 'Initial Ingress Setup/Local Dev Ingress'
-```
-
-4. Then run all the cluster configs in 'k8s' folder
+3. Then run all the cluster configs in 'k8s' folder
 ```
 $ kubectl apply -f k8s
 ```

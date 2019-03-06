@@ -5,6 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/configuration-snippet: | 
+      rewrite ^(/socket.io/.*) /results$1 permanent;
 spec:
   rules:
     - http:
@@ -13,11 +17,11 @@ spec:
             backend:
               serviceName: client-cluster-ip-service
               servicePort: 3000
-          - path: /api?(.*)
+          - path: /api/?(.*)
             backend:
               serviceName: worker-cluster-ip-service
               servicePort: 5000
-          - path: /results?/(.*)
+          - path: /results/?(.*)
             backend:
               serviceName: results-cluster-ip-service
               servicePort: 4000
